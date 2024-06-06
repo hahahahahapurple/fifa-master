@@ -37,28 +37,29 @@ public class MatchService {
         }
         return null;
     }
+
     public List<Team> play(){
         List<Matches> ma= mrepo.findAll();
         for(Matches m: ma){
             Team home=findOrAddTeam(m.getTeam(), m.getCategory());
             Team away=findOrAddTeam(m.getOpponent(), m.getCategory());
             playMatch(home, away, m.getGoals(), m.getGoalsOpponent());
-
-
         }
         return this.teams;
     }
 
     private void playMatch(Team home, Team other, int goals, int oGoals) {
-        if(oGoals > goals) {
-            home.setLosses(home.getLosses() - 1);
-            other.setWins(other.getWins() + 1);
-        } else if (oGoals < goals) {
-            home.setWins(home.getWins() + 1);
-            other.setLosses(other.getLosses() - 1);
-        } else {
-            home.setTies(home.getTies() + 1);
-            other.setTies(other.getTies() + 1);
+        if (home != null && other != null) {
+            if (oGoals > goals) {
+                home.setLosses(home.getLosses() + 1);
+                other.setWins(other.getWins() + 1);
+            } else if (goals > oGoals) {
+                home.setWins(home.getWins() + 1);
+                other.setLosses(other.getLosses() + 1);
+            } else {
+                home.setTies(home.getTies() + 1);
+                other.setTies(other.getTies() + 1);
+            }
         }
     }
 }

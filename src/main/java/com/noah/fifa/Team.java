@@ -18,5 +18,4 @@ public class Team {
     public int getPoints(){
         return (3*(this.wins)+ties);
     }
-
 }

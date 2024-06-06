@@ -22,12 +22,11 @@ public class MatchController {
     public List<Matches> getAllMatch(){
         saveMatchesToFile(mservice.findAllMatches());
         return  mservice.findAllMatches();
-
     }
+
     @GetMapping("/all")
     public List<Team> getAllTeams(){
         return mservice.play();
-
     }
 
     @GetMapping("/group/{gname}")
@@ -44,7 +43,7 @@ public class MatchController {
     public String getOverallWinner(){
         return "";
     }
-    // Method to save matches to a JSON file using FileWriter
+
     private void saveMatchesToFile(List<Matches> matches) {
         ObjectMapper objectMapper = new ObjectMapper();
         try (FileWriter fileWriter = new FileWriter(Files)) {
