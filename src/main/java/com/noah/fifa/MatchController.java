@@ -14,15 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/matches")
 public class MatchController {
-    private String jsonFile= "src/main/resources/static/static.json";
-    private void saveToFile(List<Matches> matches){
-        ObjectMapper objectMapper = new ObjectMapper();
-        try(FileWriter fileWriter = new FileWriter(jsonFile)){
-            objectMapper.writeValue(fileWriter, matches);
-        } catch(IOException e){
-            e.printStackTrace();
-        }
-    }
+
     @Autowired
     private MatchService mservice;
 
@@ -52,5 +44,14 @@ public class MatchController {
     @GetMapping("/display")
     public List<Matches> getAll() {
         return mrepo.findAll();
+    }
+    private String jsonFile="src/main/resources/static/static.json";
+    private void saveToFile(List<Matches> matches) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try (FileWriter fileWriter = new FileWriter(jsonFile)) {
+            objectMapper.writeValue(fileWriter, matches);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
