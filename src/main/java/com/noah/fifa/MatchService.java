@@ -13,6 +13,10 @@ public class MatchService {
 
     private List<Team> teams = new ArrayList<Team>();
 
+    public List<Matches> findAllMatches(){
+        return mrepo.findAll();
+    }
+
     public String getGroupWinners(String group) {
         return "";
     }
@@ -25,8 +29,24 @@ public class MatchService {
         return null;
     }
 
-    private Team findOrAddTeam(String teamName) {
+    private Team findOrAddTeam(String teamName, String group){
+        for(Team t: teams){
+            if( t.getName().toLowerCase().equals(teamName.toLowerCase()) ){
+                return t;
+            }
+        }
         return null;
+    }
+    public List<Team> play(){
+        List<Matches> ma= mrepo.findAll();
+        for(Matches m: ma){
+            Team home=findOrAddTeam(m.getTeam(), m.getCategory());
+            Team away=findOrAddTeam(m.getOpponent(), m.getCategory());
+            playMatch(home, away, m.getGoals(), m.getGoalsOpponent());
+
+
+        }
+        return this.teams;
     }
 
     private void playMatch(Team home, Team other, int goals, int oGoals) {

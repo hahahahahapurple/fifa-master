@@ -14,44 +14,44 @@ import java.util.List;
 @RestController
 @RequestMapping("/matches")
 public class MatchController {
-
     @Autowired
     private MatchService mservice;
+    private String Files="static.json";
 
-    @Autowired
-    private MatchRepo mrepo;
+    @GetMapping("/display")
+    public List<Matches> getAllMatch(){
+        saveMatchesToFile(mservice.findAllMatches());
+        return  mservice.findAllMatches();
 
+    }
     @GetMapping("/all")
-    public String getAllMatches() {
-        return "";
+    public List<Team> getAllTeams(){
+        return mservice.play();
+
     }
 
     @GetMapping("/group/{gname}")
-    public String getWinnerByGroup(@PathVariable String gname) {
+    public String getWinnerByGroup(@PathVariable String gname){
         return "";
     }
 
     @GetMapping("/group-winners")
-    public String getGroupWinners() {
-        return "";
+    public String getGroupWinners(){
+        return "group winners works";
     }
 
     @GetMapping("/overall-winner")
-    public String getOverallWinner() {
+    public String getOverallWinner(){
         return "";
     }
-
-    @GetMapping("/display")
-    public List<Matches> getAll() {
-        return mrepo.findAll();
-    }
-    private String jsonFile="src/main/resources/static/static.json";
-    private void saveToFile(List<Matches> matches) {
+    // Method to save matches to a JSON file using FileWriter
+    private void saveMatchesToFile(List<Matches> matches) {
         ObjectMapper objectMapper = new ObjectMapper();
-        try (FileWriter fileWriter = new FileWriter(jsonFile)) {
+        try (FileWriter fileWriter = new FileWriter(Files)) {
             objectMapper.writeValue(fileWriter, matches);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 }

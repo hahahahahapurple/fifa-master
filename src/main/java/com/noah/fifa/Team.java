@@ -14,8 +14,9 @@ public class Team {
     private int losses;
     private int ties;
     private String category;
-
-    public int getPoints() {
-        return 3*wins + ties;
+    private String flag;
+    public int getPoints(){
+        return (3*(this.wins)+ties);
     }
+
 }
